@@ -74,8 +74,19 @@ const showCountriesSearchResults = result => {
 export const showCountryDetailedSnippet = country => {
   emptyDetailedSnippet();
 
-  resultSnippet.appendChild(CountryDetailedSnippet(country));
-  fetchBorderCountries(country);
+  let snippet = CountryDetailedSnippet(country);
+
+  if (window.innerWidth < 768) {
+    resultsList
+      .querySelector("#country-list-item-" + country.alpha3Code)
+      .insertAdjacentElement("afterend", snippet);
+  } else {
+    resultSnippet.appendChild(snippet);
+  }
+
+  setTimeout(function() {
+    fetchBorderCountries(country);
+  }, 500);
 };
 
 /**
@@ -90,6 +101,9 @@ export const emptySearchResults = () => {
  */
 export const emptyDetailedSnippet = () => {
   resultSnippet.innerHTML = "";
+  document.querySelectorAll(".country-detailed-snippet").forEach(snippet => {
+    snippet.remove();
+  });
 };
 
 /**

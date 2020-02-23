@@ -10,7 +10,7 @@ export const CountryDetailedSnippet = item => {
   container.className = "country-detailed-snippet";
 
   container.innerHTML = `<div class="country-detailed-snippet-header">
-			<div class="row justify-start align-start">
+			<div class="row justify-start align-start wrap">
 				<div class="country-flag">
 					<img src="${item.flag}" alt="${item.name}" />
 				</div>

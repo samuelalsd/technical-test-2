@@ -12,6 +12,10 @@ import "./styles.css";
  */
 const searchInput = document.querySelector("#countries-search");
 const clearSearchBtn = document.querySelector("#clear-search-btn");
+const resultsList = document.querySelector("#countries-search-results-list");
+const resultSnippet = document.querySelector(
+  "#countries-search-results-snippet"
+);
 
 /**
  * Respond to the user search request by populating the UI with the
@@ -34,25 +38,29 @@ const searchAndUpdateView = keywords => {
  * Cookies & Session related settings
  */
 
-// Toogle dark mode if it has been enabled ("yes" found in cookie)
 const darkModeC = "dark_mode_enabled";
 const darkModeTrigger = document.querySelector("#dark-mode-trigger");
-let triggerTitle = {
-  yes: "Switch the lights back on!",
+let triggerTitleAttr = {
+  yes: "Light mode",
   no: "Dark mode"
 };
 
+// Function that toggles dark/light modes
 const toggleDarkMode = () => {
   darkModeTrigger.classList.toggle("enabled");
   document.querySelector("body").classList.toggle("dark-mode");
   setCookie(darkModeC, yesNoToggler(readCookie(darkModeC)), 30);
-  darkModeTrigger.setAttribute("title", triggerTitle[readCookie(darkModeC)]);
+  darkModeTrigger.setAttribute(
+    "title",
+    triggerTitleAttr[readCookie(darkModeC)]
+  );
 };
 
+// Toogle dark mode if it has been enabled ("yes" found in cookie)
 if (readCookie(darkModeC) === "yes") {
   darkModeTrigger.classList.add("enabled");
   document.querySelector("body").classList.add("dark-mode");
-  darkModeTrigger.setAttribute("title", triggerTitle["yes"]);
+  darkModeTrigger.setAttribute("title", triggerTitleAttr["yes"]);
 }
 
 /**
@@ -78,3 +86,15 @@ clearSearchBtn.addEventListener("click", e => {
   searchInput.value = "";
   searchInput.parentNode.classList.remove("not-empty");
 });
+
+// Adjust layout when resizing screen
+// window.addEventListener("resize", e => {
+//   let snippet = document.querySelector(".country-detailed-snippet");
+//   if (window.innerWidth < 768) {
+//     resultsList
+//       .querySelector(".country-list-item.selected")
+//       .insertAdjacentElement("afterend", snippet);
+//   } else {
+//     resultSnippet.appendChild(snippet);
+//   }
+// });
